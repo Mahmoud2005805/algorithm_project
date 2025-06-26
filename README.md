@@ -306,5 +306,290 @@ This project gave me a practical understanding of how classic graph algorithms l
 The analysis also highlighted which algorithms are most appropriate depending on graph size and structure. Kruskal, Prim, and Borůvka are all highly effective for MST construction, while Karger’s Min Cut offers a fast, probabilistic approach to evaluating network robustness. These insights are highly valuable when working with large-scale networks in areas such as bioinformatics, communication systems, and data clustering.
 
 
+## Ahmed Hamdy
+
+Overview
+This project implements and visualizes several classical graph algorithms using a dataset representing a graph structure. The algorithms are implemented in Python using libraries such as networkx, matplotlib, and core Python modules. The goal is to understand how different algorithms operate on graph structures derived from real-world datasets.
+
+Dataset
+File: ENZYMES_g136.edges
+
+Format: Edge list file (plain text)
+
+Structure: Each line represents an undirected edge between two nodes, using integer identifiers.
+
+Example:
+
+Copy
+Edit
+2 1
+3 1
+1 2
+Graph Type: The graph is undirected and unweighted (based on data and code usage).
+
+Source Context: This likely represents a molecular structure or interaction graph from the ENZYMES dataset (frequently used in graph classification tasks).
+
+Code Components
+1. Imports and Setup
+The notebook begins by importing necessary packages:
+
+python
+Copy
+Edit
+import random
+import heapq
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import networkx as nx
+from collections import defaultdict
+2. Graph Parsing
+The graph is constructed from the edge file:
+
+python
+Copy
+Edit
+edges = []
+node_set = set()
+
+with open("ENZYMES_g136.edges", "r") as file:
+    for line in file:
+        if line.strip():
+            u, v = map(int, line.strip().split())
+            edges.append((u, v))
+            node_set.update([u, v])
+This block:
+
+Reads all edges from the file
+
+Builds a list of edges
+
+Constructs a node set for later graph creation
+
+3. Graph Algorithms Implemented
+The notebook includes classical algorithms such as:
+
+Union-Find (for Kruskal's MST)
+
+Prim’s Algorithm (minimum spanning tree)
+
+Dijkstra’s Algorithm (single-source shortest paths)
+
+BFS and DFS Traversals
+
+Kruskal’s Algorithm
+
+Each of these is implemented manually rather than relying on networkx built-ins, indicating an educational or demonstrative intent.
+
+4. Visualizations
+Using matplotlib and networkx, the notebook visualizes:
+
+Original Graph
+
+Output of MSTs
+
+Traversal paths (using animation)
+
+Conclusion
+This project provides an educational implementation of core graph algorithms on a real dataset. By manually coding the algorithms and visualizing the steps, it serves as a strong foundation for understanding the inner workings of graph theory operations.
+
+
+## Yousef Assi
+
+Project Report: Visualization of Minimum Spanning Tree (MST) Algorithms
+
+Objective
+
+To implement and visually compare the execution of four classical Minimum Spanning Tree (MST) algorithms:
+	•	Kruskal’s Algorithm
+	•	Prim’s Algorithm
+	•	Borůvka’s Algorithm
+	•	Reverse Delete Algorithm
+
+Animations were used to show how each algorithm progressively builds the MST from an undirected weighted graph.
+
+⸻
+
+Dataset
+
+A synthetic undirected graph with 7 nodes and 11 edges:
+
+Edges = [
+    (2, 4, 1), (1, 2, 1), (1, 5, 1), (4, 6, 1),
+    (1, 4, 1), (2, 6, 1), (5, 6, 1), (3, 6, 1),
+    (1, 6, 1), (1, 3, 1), (3, 5, 1)
+]
+
+Each edge includes two endpoints and a uniform weight of 1, ideal for studying algorithmic structure without weight complexity.
+
+⸻
+
+Algorithms Implemented
+
+1. Kruskal’s Algorithm
+	•	Sorts edges by weight.
+	•	Adds edges if they don’t form a cycle (using Union-Find).
+	•	Animation shows edges selected in order.
+
+2. Prim’s Algorithm
+	•	Starts from a random node.
+	•	Selects the minimum weight edge that connects to an unvisited node.
+	•	Uses a priority queue.
+	•	Animation highlights node expansion.
+
+3. Borůvka’s Algorithm
+	•	Initially treats each node as a separate component.
+	•	Iteratively adds the cheapest edge for each component.
+	•	Continues until only one component (tree) remains.
+
+4. Reverse Delete Algorithm
+	•	Starts with the full graph.
+	•	Removes edges in descending weight order if their removal doesn’t disconnect the graph.
+	•	Simulates “pruning” the graph into an MST.
+
+⸻
+
+Visualization
+
+Each algorithm was visualized step-by-step:
+	•	Green edges: Selected edges forming the MST.
+	•	Gray edges: Remaining non-selected edges.
+	•	Node layout: Spring layout for consistent positioning.
+
+Animations were saved as separate MP4 videos for each algorithm, and an attempt was made to combine them into a single comparison video (2×2 grid layout).
+
+⸻
+
+Output Files
+	•	kruskal_mst_animation.mp4
+	•	prim_mst_animation.mp4
+	•	boruvka_mst_animation.mp4
+	•	reverse_delete_mst_animation.mp4
+	•	(Optional) mst_all_algorithms_combined.mp4 (comparison grid)
+
+⸻
+
+Tools Used
+	•	Python 3
+	•	NetworkX for graph representation
+	•	Matplotlib for static drawing
+	•	Matplotlib Animation API for dynamic visualization
+	•	MoviePy for combining video clips
+
+⸻
+
+Insights
+	•	All four algorithms produced the same MST (as expected with uniform edge weights).
+	•	Kruskal and Prim were more intuitive to follow.
+	•	Borůvka was efficient in rounds, and Reverse Delete was the most counterintuitive but insightful.
+
+
+ ## Ali Eldeeb
+
+# MST Algorithm Visualizer Project
+
+## What is an MST?
+
+An MST (Minimum Spanning Tree) is a way to connect all the nodes in a graph using the smallest possible total edge weight. It's commonly used in networking, road construction, and other areas where we want to connect everything with minimal cost.
+
+---
+
+## Dataset
+
+We used this small graph with 4 nodes and many connections:
+
+```
+2 1
+3 1
+4 1
+1 2
+3 2
+4 2
+1 3
+2 3
+4 3
+1 4
+2 4
+3 4
+```
+
+All edges are treated equally (weight = 1), and the graph is undirected (you can go both ways on each edge).
+
+---
+
+## Algorithms Used
+
+We implemented and visualized 4 different MST algorithms:
+
+---
+
+### 1. **Kruskal’s Algorithm**
+
+- Kruskal’s picks the smallest edges first.
+- It adds them to the tree only if they **don’t form a cycle**.
+- It stops when all the nodes are connected.
+- Think of it like building the tree edge-by-edge from the lightest ones.
+
+---
+
+### 2. **Prim’s Algorithm**
+
+- Prim’s starts from a node and **grows** the MST one edge at a time.
+- It always picks the **cheapest edge** that connects a new node to the tree.
+- It's like spreading out from one point and always choosing the smallest jump.
+
+---
+
+### 3. **Borůvka’s Algorithm**
+
+- Every node starts as its own mini-tree.
+- Each tree connects to its **closest neighbor**.
+- Trees keep merging until only one big tree is left.
+- It's done in **phases**, picking best edges in each phase.
+
+---
+
+### 4. **Reverse-Delete Algorithm**
+
+- Start with the full graph.
+- Try removing the **most expensive edges**, one by one.
+- If removing an edge breaks the graph into two, keep it.
+- At the end, what’s left is the MST.
+
+---
+
+## Visualization
+
+We created animated videos to show how each algorithm builds the MST:
+
+- 🔴 Prim’s: Red edges
+- 🔵 Borůvka’s: Blue edges
+- 🟢 Reverse-Delete: Green edges
+
+The graph layout stays the same, and the algorithms add or remove edges step by step.
+
+---
+
+## Files You Can Download
+
+- `prims_algorithm.mp4` – Prim's animation
+- `boruvkas_algorithm.mp4` – Borůvka's animation
+- `reverse_delete_algorithm.mp4` – Reverse-Delete animation
+- `mst_algorithm_documentation.txt` – This document
+
+---
+
+## Tools Used
+
+- Python
+- NetworkX
+- Matplotlib
+- FFmpeg (to save videos)
+
+---
+
+
+
+
+
 
 
